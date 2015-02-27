@@ -39,7 +39,7 @@ namespace BearClaw
         {
             //初始化黑名单数据
             blackMenuView.InitData();
-
+            
             webBrowser.LoadCompleted += (s, e) =>
             {
                 tblQueryCount.Text = (++_queryCount).ToString();
@@ -74,10 +74,11 @@ namespace BearClaw
         private void BeginQueryTask()
         {
             Uri uri;
-            var monitorUrl = Properties.Settings.Default.MonitorUrl;
+            var monitorUrl = string.Format(Properties.Settings.Default.MonitorUrl,DateTime.Now.Ticks);
             if (Uri.TryCreate(monitorUrl, UriKind.RelativeOrAbsolute, out uri))
             {
-                webBrowser.Source = uri;
+                //webBrowser.Source = uri;
+                webBrowser.Navigate(uri);
                 prMain.Visibility = System.Windows.Visibility.Visible;
             }
         }

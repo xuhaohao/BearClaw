@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="MonitorUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://www.job0663.com/search/offer_search_result.aspx?keyword=外贸&amp;jtype1Hidden=&amp;jcity1Hidden=102000&amp;page=1</Value>
+      <Value Profile="(Default)">http://www.job0663.com/search/offer_search_result.aspx?keyword=外贸&amp;jtype1Hidden=&amp;jcity1Hidden=102000&amp;page=1&amp;tt={0}</Value>
     </Setting>
     <Setting Name="Frequency" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="EMailServer" Type="System.String" Scope="Application">
       <Value Profile="(Default)">smtp.sina.com</Value>

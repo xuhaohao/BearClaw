@@ -26,7 +26,7 @@ namespace BearClaw.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://www.job0663.com/search/offer_search_result.aspx?keyword=外贸&jtype1Hidden=&j" +
-            "city1Hidden=102000&page=1")]
+            "city1Hidden=102000&page=1&tt={0}")]
         public string MonitorUrl {
             get {
                 return ((string)(this["MonitorUrl"]));
@@ -35,7 +35,7 @@ namespace BearClaw.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int Frequency {
             get {
                 return ((int)(this["Frequency"]));
