@@ -32,7 +32,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="添加到黑名单" Width="120" Margin="8,2" x:Name="btnAddToBlackMenu" Click="BtnAddToBlackMenu_OnClick"/>
+                            <!--<Button Content="添加到黑名单" Width="120" Margin="8,2" x:Name="btnAddToBlackMenu" Click="BtnAddToBlackMenu_OnClick"/>-->
                             <TextBlock Text="{Binding StrName}" Margin="4" />
                         </StackPanel>
                     </DataTemplate>

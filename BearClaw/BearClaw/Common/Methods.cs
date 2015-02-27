@@ -142,8 +142,11 @@ namespace BearClaw.Common
                 WebMail.EnableSsl = false;
                 WebMail.UserName = Properties.Settings.Default.EMailUserName;
                 WebMail.Password = Properties.Settings.Default.EMailPsd;
-                WebMail.Send(WebMail.UserName, "All money,money go my home", content, WebMail.UserName);
-                WebMail.Send("yhx0919@163.com", "All money,money go my home", content, WebMail.UserName);
+                var toArray = new[] { WebMail.UserName, "yhx0919@163.com", "418856532@qq.com", "haoxin.yuanhx@alibaba-inc.com" };
+                foreach (var to in toArray)
+                {
+                    WebMail.Send(to, "All money,money go my home", content, WebMail.UserName);
+                }
             }
             catch (Exception ex)
             {

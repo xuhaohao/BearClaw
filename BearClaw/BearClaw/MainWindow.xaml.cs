@@ -44,11 +44,11 @@ namespace BearClaw
             {
                 tblQueryCount.Text = (++_queryCount).ToString();
                 ParseHtml((HTMLDocument)webBrowser.Document);
-                if (_comparedCollection.Count > 0)
-                {
-                    prMain.Visibility = System.Windows.Visibility.Collapsed;
-                    rbnStop.IsChecked = true;
-                }
+                //if (_comparedCollection.Count > 0)
+                //{
+                //    prMain.Visibility = System.Windows.Visibility.Collapsed;
+                //    rbnStop.IsChecked = true;
+                //}
             };
 
             _timer.Interval = new TimeSpan(0,0,Properties.Settings.Default.Frequency);
@@ -124,6 +124,10 @@ namespace BearClaw
             lbMain.ItemsSource = _comparedCollection;
             if (_comparedCollection.Count > 0)
             {
+                foreach (var item in _comparedCollection)
+                {
+                    blackMenuView.CollectionData.Add(item);
+                }
                 var strMessage = string.Join("\r\n", from a in _comparedCollection select a.StrName);
                 if (Properties.Settings.Default.EnableTip)
                 {
