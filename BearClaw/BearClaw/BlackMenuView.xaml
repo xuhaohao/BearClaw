@@ -8,7 +8,8 @@
     <Grid>
         <DataGrid Margin="4" IsReadOnly="False" x:Name="dgMain" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="名称" Binding="{Binding StrName}" Width="*"/>
+                <DataGridTextColumn Header="名称" Binding="{Binding StrName,Mode=TwoWay}" Width="*"/>
+                <DataGridTextColumn Header="获取时间" Binding="{Binding GetTime}" IsReadOnly="True" Width="*"/>
                 <!--<DataGridTextColumn Header="单价" Binding="{Binding Price}" MinWidth="100"/>-->
             </DataGrid.Columns>
         </DataGrid>

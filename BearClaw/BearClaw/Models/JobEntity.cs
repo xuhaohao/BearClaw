@@ -8,6 +8,7 @@ namespace BearClaw.Models
     public class JobEntity
     {
         public string StrName { get; set; }
+        public string GetTime { get; set; }
         //public string PublicTime { get; set; }
 
         //public JobEntity(string strContent) {

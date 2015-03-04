@@ -126,6 +126,7 @@ namespace BearClaw
             {
                 foreach (var item in _comparedCollection)
                 {
+                    item.GetTime = DateTime.Now.ToString("U");
                     blackMenuView.CollectionData.Add(item);
                 }
                 var strMessage = string.Join("\r\n", from a in _comparedCollection select a.StrName);
