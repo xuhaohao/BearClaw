@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
+using System.Text.RegularExpressions;
 
 namespace BearClaw
 {
@@ -66,6 +67,8 @@ namespace BearClaw
                 prMain.Visibility = System.Windows.Visibility.Collapsed;
                 _timer.Stop();
             };
+
+            //webBrowser.Document.Window
         }
 
         /// <summary>
@@ -79,6 +82,8 @@ namespace BearClaw
             {
                 //webBrowser.Source = uri;
                 webBrowser.Navigate(uri);
+                //webBrowser
+                
                 prMain.Visibility = System.Windows.Visibility.Visible;
             }
         }
@@ -90,35 +95,51 @@ namespace BearClaw
         /// <returns></returns>
         public void ParseHtml(HTMLDocument htmlDocument)
         {
+            dynamic document = ((IHTMLElement)htmlDocument.documentElement).document;
+            dynamic innerHtml = ((IHTMLElement)htmlDocument.documentElement).innerHTML;
 
-            var strContent = ((IHTMLElement)htmlDocument.documentElement).innerText;
-            var beginIndex = strContent.IndexOf("个记录") + 3;
-            var length = strContent.IndexOf("全选") - beginIndex;
-            
-            strContent = strContent.Substring(beginIndex, length);
+            Regex reg = new Regex(@"(?<=<H2>)(.*?)(?=</H2>)", RegexOptions.IgnoreCase);//[^(<td>))] 
+            MatchCollection mc = reg.Matches(innerHtml);
 
-            var list = strContent.Split(new [] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var newDic = new Dictionary<string,JobEntity>();
-
-            newDic.Clear();
-
-            foreach (var item in list)
+            var newDic = new Dictionary<string, JobEntity>();
+            foreach (var item in mc)
             {
-                if (item.Trim().Length > 0 && item.Contains("发布于"))
+                var strValue = item.ToString();
+                if (!newDic.ContainsKey(strValue))
                 {
-                    var subList = item.Split(new[] { "发布于" }, StringSplitOptions.RemoveEmptyEntries);
-                    var strArray = subList[0].Split(new []{" ","  "},StringSplitOptions.RemoveEmptyEntries);
-
-                    var strName =  strArray.Length > 1 ? strArray[1] : string.Empty;
-
-                    if (!newDic.ContainsKey(strName))
-                    {
-                        var jobEntity = new JobEntity { StrName = strName };
-                        newDic.Add(strName,jobEntity);
-                    }
+                    var jobEntity = new JobEntity { StrName = strValue };
+                    newDic.Add(strValue, jobEntity);
                 }
             }
+
+            //var strContent = ((IHTMLElement)htmlDocument.documentElement).innerText;
+            //var beginIndex = strContent.IndexOf("降序升序") + 4;
+            //var length = strContent.IndexOf("全选") - beginIndex;
+
+            //strContent = strContent.Substring(beginIndex, length);
+
+            //var list = strContent.Split(new [] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+            //var newDic = new Dictionary<string,JobEntity>();
+
+            //newDic.Clear();
+
+            //foreach (var item in list)
+            //{
+            //    if (item.Trim().Length > 0 && item.Contains("发布于"))
+            //    {
+            //        var subList = item.Split(new[] { "发布于" }, StringSplitOptions.RemoveEmptyEntries);
+            //        var strArray = subList[0].Split(new []{" ","  "},StringSplitOptions.RemoveEmptyEntries);
+
+            //        var strName =  strArray.Length > 1 ? strArray[1] : string.Empty;
+
+            //        if (!newDic.ContainsKey(strName))
+            //        {
+            //            var jobEntity = new JobEntity { StrName = strName };
+            //            newDic.Add(strName,jobEntity);
+            //        }
+            //    }
+            //}
 
             _comparedCollection = Methods.Compare(blackMenuView.CollectionData, newDic.Values);
             lbMain.ItemsSource = _comparedCollection;
