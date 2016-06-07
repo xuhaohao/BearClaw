@@ -40,7 +40,7 @@
             // 
             this.taskNotifyIcon.ContextMenuStrip = this.taskContextMenuStript;
             this.taskNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("taskNotifyIcon.Icon")));
-            this.taskNotifyIcon.Text = "狗熊发财";
+            this.taskNotifyIcon.Text = "阳纯慧_发财版";
             this.taskNotifyIcon.Visible = true;
             this.taskNotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.taskNotifyIcon_MouseDoubleClick);
             // 
@@ -64,7 +64,6 @@
             this.CloseApp.Size = new System.Drawing.Size(174, 22);
             this.CloseApp.Text = "关闭程序";
             this.taskContextMenuStript.ResumeLayout(false);
-
         }
 
         #endregion

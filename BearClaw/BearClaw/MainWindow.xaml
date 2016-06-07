@@ -9,8 +9,7 @@
                       Width="1024" Icon="server.ico" BorderThickness="1">
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <!--<Button Content="发送设置" x:Name="btnSendConfig" Click="BtnSendConfig_OnClick" />-->
-            <Button Content="过滤名单设置" x:Name="btnBlackMenu" Click="BtnBlackMenu_OnClick" />
+            <Button Content="参数设置" x:Name="btnBlackMenu" Click="BtnBlackMenu_OnClick" />
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 
@@ -20,29 +19,62 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <RadioButton Content="开始" x:Name="rbnBegin" FontSize="16"/>
-                <RadioButton Content="停止" x:Name="rbnStop" FontSize="16" IsChecked="True"/>
-            </StackPanel>
-            <TextBlock x:Name="tblCount" Grid.Row="1" />
+            <Grid Margin="8,4" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <RadioButton Content="开始" x:Name="rbnBegin" FontSize="16" Grid.Column="0"/>
+                <RadioButton Content="停止" x:Name="rbnStop" FontSize="16" IsChecked="True" Grid.Column="1"/>
+                <TextBlock  x:Name="tblQueryCount" Foreground="#7741b1e1" Margin="8,2" Grid.Column="3" Text="[0]"/>
+            </Grid>
 
+            <controls:MetroProgressBar Grid.Row="1" Height="15" Margin="4" x:Name="mpbMain" IsIndeterminate="True" Visibility="Collapsed"/>
             <WebBrowser Grid.Row="2" Grid.ColumnSpan="2" x:Name="webBrowser" Visibility="Collapsed"/>
-            <ListBox Grid.Row="2" Grid.ColumnSpan="2"  x:Name="lbMain" >
+            <!--<ListBox Grid.Row="2" Grid.ColumnSpan="2"  x:Name="dgMain" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <!--<Button Content="添加到黑名单" Width="120" Margin="8,2" x:Name="btnAddToBlackMenu" Click="BtnAddToBlackMenu_OnClick"/>-->
-                            <TextBlock Text="{Binding StrName}" Margin="4" />
-                        </StackPanel>
+                        <Grid  Margin="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"  />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border  Margin="2" Grid.ColumnSpan="2" Grid.RowSpan="3" />
+                            <TextBlock Text="公司名称"  Margin="4" />
+                            <TextBlock Text="{Binding Name}" Grid.Column="1" Margin="4" />
+                            <TextBlock Text="公司信息Url" Grid.Row="1"  Margin="4" />
+                            
+                            <TextBlock Text="{Binding Url}"  Grid.Row="1" Grid.Column="1" Margin="4" />
+                            <TextBlock Text="抓取时间" Grid.Row="2"  Margin="4" />
+                            <TextBlock Text="{Binding TimeTag}"  Grid.Row="2" Grid.Column="1" Margin="4" />
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
-            <controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="2" x:Name="prMain" Visibility="Collapsed" Width="250" Height="250"/>
-            <TextBlock x:Name="tblQueryCount" Grid.Row="2" Grid.ColumnSpan="2" FontSize="40"
-                       VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding ElementName=prMain,Path=Visibility}" />
+            </ListBox>-->
+            <DataGrid Grid.Row="2" Grid.ColumnSpan="2"  x:Name="dgMain" AutoGenerateColumns="False"  Hyperlink.Click="DataGridHyperlinkColumn_Click">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="公司名称" MinWidth="200" />
+                    <DataGridHyperlinkColumn Binding="{Binding Url}" Header="公司信息Url" MinWidth="200" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Tel}" Header="备注信息" MinWidth="200"/>
+                    <DataGridTextColumn Binding="{Binding TimeTag}" Header="抓取时间" MinWidth="200"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Background="#41b1e1">
+                <TextBlock Text="当前记录的公司数目:"  Margin="4,2" FontSize="15" Foreground="White"/>
+                <TextBlock x:Name="tblCount"  Margin="16,2" FontSize="17" FontWeight="Bold" Foreground="White"/>
+            </StackPanel>
+            
         </Grid>
-        <controls:Flyout x:Name="fyBlackMenu" Width="450" IsModal="True" Position="Right" Header="过滤名单" Theme="Accent" >
+        <controls:Flyout x:Name="fyBlackMenu" Width="450" IsModal="True" Position="Right" Header="参数配置" Theme="Accent" >
             <Grid>
                 <bearClaw:BlackMenuView x:Name="blackMenuView"/>
             </Grid>

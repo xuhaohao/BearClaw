@@ -11,6 +11,8 @@ using System.Text;
 using System.Windows;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using SqliteORM;
+using System.Diagnostics;
 
 namespace BearClaw.Common
 {
@@ -135,41 +137,6 @@ namespace BearClaw.Common
             return result;
         }
 
-
-        public static void SendMail(string content) {
-            
-            var eMailServer = Properties.Settings.Default.EMailServer;
-            var userName = Properties.Settings.Default.EMailUserName;
-            var pwd = Properties.Settings.Default.EMailPsd;
-            var toArray = new[] { userName, "yhx0919@163.com", "418856532@qq.com", "haoxin.yuanhx@alibaba-inc.com", "xuhaohao@dayang.com.cn" };
-            //var toArray = new[] { userName, "haohao_xu_tc@163.com", "xuhaohao@dayang.com.cn" };
-
-            var mailMessage = new MailMessage();
-            foreach (var strTo in toArray)
-            {
-                mailMessage.To.Add(strTo);
-            }
-
-            mailMessage.From = new MailAddress(userName, "mimi");
-            mailMessage.Subject = "队长,皇军托我给您传个话儿";
-            mailMessage.SubjectEncoding = Encoding.UTF8;
-            mailMessage.Body = content;
-            mailMessage.BodyEncoding = Encoding.UTF8;
-            mailMessage.IsBodyHtml = false;
-            mailMessage.Priority = MailPriority.Normal;
-
-            var smtp = new SmtpClient(eMailServer, 25) { Credentials = new NetworkCredential(userName, pwd) };
-            object userState = mailMessage;
-
-            try
-            {
-                smtp.SendAsync(mailMessage,userState);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
 
     }
 }

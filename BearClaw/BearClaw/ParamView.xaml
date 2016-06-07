@@ -8,9 +8,9 @@
     <Grid>
         <DataGrid Margin="4" IsReadOnly="False" x:Name="dgMain" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="名称" Binding="{Binding StrName,Mode=TwoWay}" Width="*"/>
-                <DataGridTextColumn Header="获取时间" Binding="{Binding GetTime}" IsReadOnly="True" Width="*"/>
-                <!--<DataGridTextColumn Header="单价" Binding="{Binding Price}" MinWidth="100"/>-->
+                <DataGridTextColumn Header="组名" Binding="{Binding FieldGroup,Mode=TwoWay}" MinWidth="60"/>
+                <DataGridTextColumn Header="名称" Binding="{Binding Name,Mode=TwoWay}"  MinWidth="100"/>
+                <DataGridTextColumn Header="参数值" Binding="{Binding Value,Mode=TwoWay}"  Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
