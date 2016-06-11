@@ -7,6 +7,7 @@ using BearClaw.Models;
 using System.Text.RegularExpressions;
 using BearClaw.Common;
 using System.Diagnostics;
+using HtmlAgilityPack;
 
 namespace BearClaw.Strategy
 {
@@ -14,25 +15,30 @@ namespace BearClaw.Strategy
     {
         public override string GetDomain()
         {
-            return "www.job001.cn";
+            return "www.job0663.com";
         }
 
         public override string GetUri()
         {
-            return @"http://www.job001.cn/jobs/jobs-list.php?listType=&key=%CD%E2%C3%B3&keyType=0&trade=&jobcategory=&citycategory=308&wage=&education=&isEduAbove=1&experience=&isExpAbove=1&nature=&settr=&sort=district&com_nature=&com_scale=&lang=&experienceMin=&experienceMax=&educationMin=&educationMax=&wageMin=&wageMax=&isDistrict=0&sortField=";
+            return @"http://www.job0663.com/search/offer_search_result.aspx?keyword=外贸&amp;jtype1Hidden=&amp;jcity1Hidden=102000&amp;page=1";
         }
         public override List<Jobs> Strategy(string htmlText)
         {
             List<Jobs> jobs = new List<Jobs>();
-            Regex reg = new Regex(@"(?<=<H2>)(.*?)(?=</H2>)", RegexOptions.IgnoreCase);//[^(<td>))] 
-            MatchCollection mc = reg.Matches(htmlText);
-
-            var newDic = new Dictionary<string, JobEntity>();
-            foreach (var item in mc)
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(htmlText);
+            var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@id,'_EntUrl')]");
+            if (htmlNodes != null)
             {
-                var strValue = item.ToString();
-                var job = new Jobs() { Name = strValue, TimeTag = DateTime.Now.ToString() };
-                jobs.Add(job);
+                foreach (var htmlNode in htmlNodes)
+                {
+                    if (htmlNode.InnerText != null )
+                    {
+                        var href = htmlNode.GetAttributeValue("href", "");
+                        var job = new Jobs() { Name = htmlNode.InnerText, Url = JoinUrl(@"http://www.job0663.com/search", href), TimeTag = DateTime.Now.ToString() };
+                        jobs.Add(job);
+                    }
+                }
             }
             return jobs;
         }

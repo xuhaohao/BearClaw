@@ -11,15 +11,15 @@ namespace BearClaw.Strategy
 
         static MyStrategy()
         {
-            //StrategyList.Add(new Strategy_job0663());
-            List.Add(new Strategy_0760rc());
+            List.Add(new Strategy_job0663());
+            //List.Add(new Strategy_0760rc());
             List.Add(new Strategy_51job());
-            List.Add(new Strategy_58());
-            List.Add(new Strategy_gbeport());
-            List.Add(new Strategy_job001());
-            List.Add(new Strategy_job5156());
-            List.Add(new Strategy_job_sky_zs());
-            List.Add(new Strategy_zhaopin_sou());
+            //List.Add(new Strategy_58());
+            //List.Add(new Strategy_gbeport());
+            //List.Add(new Strategy_job001());
+            //List.Add(new Strategy_job5156());
+            //List.Add(new Strategy_job_sky_zs());
+            //List.Add(new Strategy_zhaopin_sou());
 
             foreach (var item in List)
             {

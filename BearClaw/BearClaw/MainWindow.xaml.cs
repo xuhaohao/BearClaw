@@ -137,8 +137,13 @@ namespace BearClaw
             //开始索引下一个Url
             if (webBrowser.IsLoaded)
             {
-                var uri = MyStrategy.List[_naviUrlIndex].GetUri();
-                webBrowser.Navigate(uri);
+                var strUri = MyStrategy.List[_naviUrlIndex].GetUri();
+                Uri uri = null;
+                if (Uri.TryCreate(strUri, UriKind.RelativeOrAbsolute, out uri)) {
+                    webBrowser.Navigate(uri);
+                }
+                //Uri uri = 
+                
             }
         }
 

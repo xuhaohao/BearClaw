@@ -17,6 +17,10 @@ namespace BearClaw
     {
         public static readonly ILog log = LogManager.GetLogger(typeof(App));
 
+        public static readonly string From = "狗熊";
+
+        public static readonly string Area = "揭阳";
+
         public static NotifyIconComponent AppComponent { set; get; }
 
         protected override void OnStartup(StartupEventArgs e)

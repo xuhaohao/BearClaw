@@ -19,7 +19,8 @@ namespace BearClaw.Strategy
 
         public override string GetUri()
         {
-            return @"http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=030700%2C00&funtype=0000&industrytype=00&keyword=%E5%A4%96%E8%B4%B8&keywordtype=2&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9";
+            //return @"http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=030700%2C00&funtype=0000&industrytype=00&keyword=%E5%A4%96%E8%B4%B8&keywordtype=2&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9";
+            return @"http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=032200&funtype=0000&industrytype=00&keyword=%E5%A4%96%E8%B4%B8&keywordtype=2&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9";
         }
         public override List<Jobs> Strategy(string htmlText)
         {
@@ -33,7 +34,7 @@ namespace BearClaw.Strategy
                 {
                         var address = htmlNode.ParentNode.ParentNode.ChildNodes[4].FirstChild;
 
-                        if (address != null && address.InnerText != null && address.InnerText.Contains("中山"))
+                        if (address != null && address.InnerText != null && address.InnerText.Contains(App.Area))
                         {
                             var href = htmlNode.GetAttributeValue("href", "");
                             var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };

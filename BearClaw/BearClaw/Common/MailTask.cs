@@ -101,7 +101,7 @@ namespace BearClaw.Common
             mailMessage.Priority = MailPriority.High;
 
             var smtp = new SmtpClient(eMailServer, 25) { Credentials = new NetworkCredential(userName, pwd) };
-            smtp.EnableSsl = true;
+            //smtp.EnableSsl = true;
             object userState = mailMessage;
 
             try
