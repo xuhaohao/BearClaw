@@ -104,6 +104,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\MailTask.cs" />
     <Compile Include="Strategy\MyStrategy.cs" />
+    <Compile Include="Strategy\Strategy_0663job.cs" />
     <Compile Include="Strategy\Strategy_0760rc.cs" />
     <Compile Include="Strategy\Strategy_51job.cs" />
     <Compile Include="Strategy\Strategy_58.cs" />

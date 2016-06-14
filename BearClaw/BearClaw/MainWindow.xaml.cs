@@ -139,11 +139,13 @@ namespace BearClaw
             {
                 var strUri = MyStrategy.List[_naviUrlIndex].GetUri();
                 Uri uri = null;
-                if (Uri.TryCreate(strUri, UriKind.RelativeOrAbsolute, out uri)) {
+                if (strUri.Contains("job0663") && Uri.TryCreate(strUri, UriKind.RelativeOrAbsolute, out uri))
+                {
                     webBrowser.Navigate(uri);
                 }
-                //Uri uri = 
-                
+                else {
+                    webBrowser.Navigate(strUri);
+                }
             }
         }
 
@@ -177,7 +179,7 @@ namespace BearClaw
             }
             else
             {
-                log.ErrorFormat("document.domain = {0} 不存在", domain);
+                log.DebugFormat("document.domain = {0} 不存在", domain);
             }
         }
 

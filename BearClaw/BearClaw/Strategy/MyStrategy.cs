@@ -11,6 +11,7 @@ namespace BearClaw.Strategy
 
         static MyStrategy()
         {
+            List.Add(new Strategy_0663job());
             List.Add(new Strategy_job0663());
             //List.Add(new Strategy_0760rc());
             List.Add(new Strategy_51job());
