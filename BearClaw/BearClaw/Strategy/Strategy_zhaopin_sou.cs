@@ -14,7 +14,7 @@ namespace BearClaw.Strategy
 
         public override string GetUri()
         {
-            return @"http://sou.zhaopin.com/jobs/searchresult.ashx?jl=中山&kw=外贸&sm=0&p=1&sf=0&st=99999&isadv=1";
+            return string.Format("http://sou.zhaopin.com/jobs/searchresult.ashx?jl={0}&kw=外贸&sm=0&p=1&sf=0&st=99999&isadv=1", App.Area);
         }
         public override List<Jobs> Strategy(string htmlText)
         {

@@ -92,7 +92,7 @@ namespace BearClaw.Common
                 }
             }
 
-            mailMessage.From = new MailAddress(userName, "mimi");
+            mailMessage.From = new MailAddress(userName, App.Area + "robot");
             mailMessage.Subject = subject;
             mailMessage.SubjectEncoding = Encoding.UTF8;
             mailMessage.Body = content;
