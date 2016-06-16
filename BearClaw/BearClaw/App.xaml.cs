@@ -17,6 +17,7 @@ namespace BearClaw
     {
         public static readonly ILog log = LogManager.GetLogger(typeof(App));
 
+        public static readonly string Area = "中山";
 
         public static NotifyIconComponent AppComponent { set; get; }
 
