@@ -18,10 +18,11 @@ namespace BearClaw.Strategy
             //List.Add(new Strategy_job5156());
             //List.Add(new Strategy_job_sky_zs());
             //xm.597.com
+            List.Add(new Strategy_597_xm());
             //厦门人才网
-            List.Add(new Strategy_51job());
-            List.Add(new Strategy_58());
-            List.Add(new Strategy_zhaopin_sou());
+            //List.Add(new Strategy_51job());
+            //List.Add(new Strategy_58());
+            //List.Add(new Strategy_zhaopin_sou());
 
             foreach (var item in List)
             {

@@ -19,6 +19,8 @@ namespace BearClaw
 
         public static readonly string Area = "厦门";
 
+        public static readonly string[] Area_Sub = { "同安", "集美", "灌口", "杏林" };
+
         public static NotifyIconComponent AppComponent { set; get; }
 
         protected override void OnStartup(StartupEventArgs e)

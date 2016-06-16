@@ -107,6 +107,7 @@
     <Compile Include="Strategy\Strategy_0760rc.cs" />
     <Compile Include="Strategy\Strategy_51job.cs" />
     <Compile Include="Strategy\Strategy_58.cs" />
+    <Compile Include="Strategy\Strategy_597_xm.cs" />
     <Compile Include="Strategy\Strategy_gbeport.cs" />
     <Compile Include="Strategy\Strategy_job_sky_zs.cs" />
     <Compile Include="Strategy\Strategy_job001.cs" />
