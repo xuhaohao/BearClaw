@@ -33,7 +33,7 @@ namespace BearClaw.Strategy
                 {
                         var address = htmlNode.ParentNode.ParentNode.ChildNodes[4].FirstChild;
 
-                        if (address != null && address.InnerText != null && address.InnerText.Contains("中山"))
+                        if (address != null && address.InnerText != null && address.InnerText.Contains(App.Area))
                         {
                             var href = htmlNode.GetAttributeValue("href", "");
                             var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };

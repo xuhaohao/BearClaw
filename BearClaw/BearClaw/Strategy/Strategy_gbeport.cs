@@ -34,7 +34,7 @@ namespace BearClaw.Strategy
                 {
                     var href = htmlNode.GetAttributeValue("href", "");
                     var name = htmlNode.InnerText;
-                    if (name != null && name.Contains("中山")) {
+                    if (name != null && name.Contains(App.Area)) {
                         var job = new Jobs() { Name = htmlNode.InnerText, Url = JoinUrl(@"http://www.gbeport.gov.cn", href), TimeTag = DateTime.Now.ToString() };
                         jobs.Add(job);
                     }
