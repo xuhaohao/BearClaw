@@ -44,8 +44,6 @@ namespace BearClaw.Strategy
                             jobs.Add(job);
                         }
                     }
-
-
                 }
             }
             return jobs;
