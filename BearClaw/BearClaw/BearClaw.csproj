@@ -113,6 +113,7 @@
     <Compile Include="Strategy\Strategy_job001.cs" />
     <Compile Include="Strategy\Strategy_job0663.cs" />
     <Compile Include="Strategy\Strategy_job5156.cs" />
+    <Compile Include="Strategy\Strategy_xmrc.cs" />
     <Compile Include="Strategy\Strategy_zhaopin_sou.cs" />
     <Page Include="ParamView.xaml">
       <SubType>Designer</SubType>
