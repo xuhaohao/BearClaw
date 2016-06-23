@@ -40,26 +40,13 @@ namespace BearClaw.Common
             }
         }
 
-        public static List<Jobs> Valid(List<Jobs> jobs)
+        public static List<Jobs> Valid(Dictionary<string,Jobs> jobMap)
         {
-            //消除jobs中重名项
-            var nameMap = new Dictionary<String, Jobs>();
-            foreach (var job in jobs)
-            {
-                var name = job.Name.Trim();
-                if (!nameMap.ContainsKey(name))
-                {
-                    nameMap.Add(name, job);
-                }
-            }
-            if (jobs.Count != nameMap.Count) {
-                var a = nameMap.Count;
-            }
             //消除数据库中的重名项
             List<Jobs> result = new List<Jobs>();
             using (TableAdapter<Jobs> adapter = TableAdapter<Jobs>.Open())
             {
-                foreach (var job in nameMap.Values)
+                foreach (var job in jobMap.Values)
                 {
                     var name = job.Name.Trim();
                     var rows = adapter.Select().Where(Where.Equal("Name", name)).Count();

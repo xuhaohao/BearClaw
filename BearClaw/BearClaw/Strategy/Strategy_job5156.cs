@@ -21,9 +21,9 @@ namespace BearClaw.Strategy
         {
             return @"http://www.job5156.com/s/result/kt0_kw-外贸_wl14040000.html";
         }
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
 
@@ -33,11 +33,15 @@ namespace BearClaw.Strategy
                 foreach (var htmlNode in htmlNodes)
                 {
                     var href = htmlNode.GetAttributeValue("href", "");
-                    var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
-                    jobs.Add(job);
+                    var companyName = htmlNode.InnerText;
+                    if (!jobMap.ContainsKey(companyName))
+                    {
+                        var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
+                        jobMap.Add(companyName, job);
+                    }
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }

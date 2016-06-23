@@ -23,9 +23,9 @@ namespace BearClaw.Strategy
         }
 
 
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             //*[@id="infolists"]/div[3]/ul/li[2]/a
@@ -38,15 +38,19 @@ namespace BearClaw.Strategy
                 {
                     var jobName = htmlNode.InnerText;
                     if (jobName.Contains("外贸")) {
-                        var jobNode = htmlNode.ParentNode.ParentNode.ChildNodes[5].FirstChild;
-                        var href = jobNode.GetAttributeValue("href", "");
-                        var job = new Jobs() { Name = jobNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
-                        jobs.Add(job);
+                        var companyNode = htmlNode.ParentNode.ParentNode.ChildNodes[5].FirstChild;
+                        var companyName = companyNode.InnerText;
+                        var href = companyNode.GetAttributeValue("href", "");
+                        if (!jobMap.ContainsKey(companyName))
+                        {
+                            var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
+                            jobMap.Add(companyName, job);
+                        }
                     }
 
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }

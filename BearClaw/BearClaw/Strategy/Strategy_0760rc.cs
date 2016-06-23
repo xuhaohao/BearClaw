@@ -24,9 +24,9 @@ namespace BearClaw.Strategy
 
 
 
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@id,'_EntUrl')]");
@@ -35,11 +35,14 @@ namespace BearClaw.Strategy
                 foreach (var htmlNode in htmlNodes)
                 {
                     var href = htmlNode.GetAttributeValue("href", "");
-                    var job = new Jobs() { Name = htmlNode.InnerText, Url = JoinUrl(@"http://www.0760rc.com/search", href), TimeTag = DateTime.Now.ToString() };
-                    jobs.Add(job);
+                    var companyName = htmlNode.InnerText;
+                    if (!jobMap.ContainsKey(companyName)) {
+                        var job = new Jobs() { Name = companyName, Url = JoinUrl(@"http://www.0760rc.com/search", href), TimeTag = DateTime.Now.ToString() };
+                        jobMap.Add(companyName,job);
+                    }
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }

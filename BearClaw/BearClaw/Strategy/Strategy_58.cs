@@ -22,9 +22,9 @@ namespace BearClaw.Strategy
             return @"http://xm.58.com/job/?PGTID=0d100000-0030-3961-47ed-05af6f7f3a78&ClickID=6&key=%252525E5%252525A4%25252596%252525E8%252525B4%252525B8";
         }
 
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             var htmlNodes = doc.DocumentNode.SelectNodes("//*[@id=\"jingzhun\"]/dd[2]/a");
@@ -32,12 +32,16 @@ namespace BearClaw.Strategy
             {
                 foreach (var htmlNode in htmlNodes)
                 {
-                    var href = htmlNode.GetAttributeValue("href", "");
-                    var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
-                    jobs.Add(job);
+                    var companyName = htmlNode.InnerText;
+                    if (!jobMap.ContainsKey(companyName))
+                    {
+                        var href = htmlNode.GetAttributeValue("href", "");
+                        var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
+                        jobMap.Add(companyName,job);
+                    } 
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }

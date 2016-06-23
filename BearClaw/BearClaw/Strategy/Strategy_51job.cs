@@ -21,9 +21,9 @@ namespace BearClaw.Strategy
         {
             return @"http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=110300&funtype=0000&industrytype=00&keyword=%E5%A4%96%E8%B4%B8&keywordtype=2&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9";
         }
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@href,'jobs.51job.com/all/')]");
@@ -31,17 +31,20 @@ namespace BearClaw.Strategy
             {
                 foreach (var htmlNode in htmlNodes)
                 {
+                    var companyName = htmlNode.InnerText;
+                    if (!jobMap.ContainsKey(companyName))
+                    {
                         var address = htmlNode.ParentNode.ParentNode.ChildNodes[4].FirstChild;
-
                         if (address != null && address.InnerText != null && address.InnerText.Contains(App.Area))
                         {
                             var href = htmlNode.GetAttributeValue("href", "");
-                            var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
-                            jobs.Add(job);
+                            var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
+                            jobMap.Add(companyName,job);
                         }
+                    }
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }

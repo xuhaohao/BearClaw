@@ -22,9 +22,9 @@ namespace BearClaw.Strategy
             return @"http://www.gbeport.gov.cn/CardInfoList.aspx";
         }
 
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@href,'card.net/Z')]");
@@ -33,14 +33,15 @@ namespace BearClaw.Strategy
                 foreach (var htmlNode in htmlNodes)
                 {
                     var href = htmlNode.GetAttributeValue("href", "");
-                    var name = htmlNode.InnerText;
-                    if (name != null && name.Contains(App.Area)) {
-                        var job = new Jobs() { Name = htmlNode.InnerText, Url = JoinUrl(@"http://www.gbeport.gov.cn", href), TimeTag = DateTime.Now.ToString() };
-                        jobs.Add(job);
+                    var companyName = htmlNode.InnerText;
+                    if (!jobMap.ContainsKey(companyName) && companyName.Contains(App.Area))
+                    {
+                        var job = new Jobs() { Name = companyName, Url = JoinUrl(@"http://www.gbeport.gov.cn", href), TimeTag = DateTime.Now.ToString() };
+                        jobMap.Add(companyName, job);
                     }
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }

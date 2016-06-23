@@ -21,9 +21,9 @@ namespace BearClaw.Strategy
         {
             return @"http://zs.job-sky.com/qiuzhi/search.aspx";
         }
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
             var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@href,'ViewCompanyDetails.aspx?aid=') and contains(text(),'外贸')]");
@@ -34,17 +34,20 @@ namespace BearClaw.Strategy
                     var trNode = htmlNode.ParentNode.ParentNode.ParentNode;
                     if (trNode.HasChildNodes) {
                         var jobNode = trNode.ChildNodes[7].FirstChild.FirstChild;
-                        var href = jobNode.GetAttributeValue("href", "");
-                        if (jobNode.InnerText != null && jobNode.InnerText.Trim().Length > 0)
+                        var companyName = jobNode.InnerText;
+                        if (!jobMap.ContainsKey(companyName))
                         {
-                            var job = new Jobs() { Name = jobNode.InnerText, Url = JoinUrl(@"http://zs.job-sky.com/qiuzhi", href), TimeTag = DateTime.Now.ToString() };
-                            jobs.Add(job);
+                            var href = jobNode.GetAttributeValue("href", "");
+                            if (jobNode.InnerText != null && jobNode.InnerText.Trim().Length > 0)
+                            {
+                                var job = new Jobs() { Name = companyName, Url = JoinUrl(@"http://zs.job-sky.com/qiuzhi", href), TimeTag = DateTime.Now.ToString() };
+                                jobMap.Add(companyName, job);
+                            }
                         }
                     }
-
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }

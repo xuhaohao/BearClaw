@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using BearClaw.Models;
 using HtmlAgilityPack;
+using System.Net;
 
 namespace BearClaw.Strategy
 {
     class Strategy_xmrc : MyStrategy
     {
+
+        private const string addressMark = "联系地址：";
+
         public override string GetDomain()
         {
             return "www.xmrc.com.cn";
@@ -20,23 +24,48 @@ namespace BearClaw.Strategy
             return "http://www.xmrc.com.cn/net/info/resultg.aspx?a=a&g=g&jobtype=&releaseTime=365&searchtype=3&keyword=%E5%A4%96%E8%B4%B8&sortby=updatetime&ascdesc=Desc&PageSize=100&PageIndex=1";
         }
 
-        public override List<Jobs> Strategy(string htmlText)
+        public override Dictionary<string, Jobs> Strategy(string htmlText)
         {
-            List<Jobs> jobs = new List<Jobs>();
+            var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
 
-            var htmlNodes = doc.DocumentNode.SelectNodes("//li/div[2]/a");
+            var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@href,'showco.aspx?CompanyID=')]");
             if (htmlNodes != null)
             {
                 foreach (var htmlNode in htmlNodes)
                 {
-                    var href = htmlNode.GetAttributeValue("href", "");
-                    var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
-                    jobs.Add(job);
+                    var companyName = htmlNode.InnerText;
+                    if (!jobMap.ContainsKey(companyName))
+                    {
+                        var href = JoinUrl("http://www.xmrc.com.cn/net/info", htmlNode.GetAttributeValue("href", ""));
+                        var addressText = htmlNode.ParentNode.ParentNode.ChildNodes[7].FirstChild.InnerText.Trim();
+                        if (addressText.Equals("厦门市"))
+                        {
+
+                            var webClient = new WebClient();
+                            webClient.Encoding = Encoding.UTF8;
+                            var content = webClient.DownloadString(href);
+                            var companyDoc = new HtmlDocument();
+                            companyDoc.LoadHtml(content);
+                            var addressNode = companyDoc.DocumentNode.SelectSingleNode(string.Format("//td[contains(text(),'{0}')]", addressMark));
+                            if (addressNode != null)
+                            {
+                                addressText = addressNode.InnerText.Replace(addressMark, string.Empty);
+                            }
+                        }
+                        foreach (var item in App.Area_Sub)
+                        {
+                            if (addressText.Contains(item))
+                            {
+                                var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
+                                jobMap.Add(companyName, job);
+                            }
+                        }
+                    }
                 }
             }
-            return jobs;
+            return jobMap;
         }
     }
 }
