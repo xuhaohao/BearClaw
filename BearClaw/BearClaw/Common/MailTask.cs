@@ -51,14 +51,14 @@ namespace BearClaw.Common
                 log.DebugFormat(content.ToString());
                 content.Append("<!DOCTYPE HTML><html><body>");
                 content.AppendFormat("恭喜发财,发现{0}家公司:<br/>", _bag.Count);
-                content.Append("<table border='1'><tr><th>序号</th><th>公司名称</th><th>备注</th></tr>");
+                content.Append("<table border='1'><tr><th>序号</th><th>公司名称</th><th>来源</th></tr>");
                 for (int i = 0; i < _bag.Count; i++)
                 {
                     var job = _bag[i];
                     content.Append("<tr>");
                     content.Append("<td>").Append(i + 1).Append("</td>");
                     content.Append("<td>").Append("<a href='").Append(job.Url).Append("'>").Append(job.Name).Append("</a></td>");
-                    content.Append("<td>").Append(job.Tel).Append("</td>");
+                    content.Append("<td>").Append(job.Ext1).Append("</td>");
                     content.Append("</tr>");
                 }
                 content.Append("</table><br/><br/>");
@@ -92,7 +92,7 @@ namespace BearClaw.Common
                 }
             }
 
-            mailMessage.From = new MailAddress(userName, "mimi");
+            mailMessage.From = new MailAddress(userName, App.Area + "robot");
             mailMessage.Subject = subject;
             mailMessage.SubjectEncoding = Encoding.UTF8;
             mailMessage.Body = content;
@@ -101,7 +101,7 @@ namespace BearClaw.Common
             mailMessage.Priority = MailPriority.High;
 
             var smtp = new SmtpClient(eMailServer, 25) { Credentials = new NetworkCredential(userName, pwd) };
-            smtp.EnableSsl = true;
+            //smtp.EnableSsl = true;
             object userState = mailMessage;
 
             try

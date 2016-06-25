@@ -41,6 +41,7 @@ namespace BearClaw.Strategy
                             if (jobNode.InnerText != null && jobNode.InnerText.Trim().Length > 0)
                             {
                                 var job = new Jobs() { Name = companyName, Url = JoinUrl(@"http://zs.job-sky.com/qiuzhi", href), TimeTag = DateTime.Now.ToString() };
+                                job.Ext1 = GetDomain();
                                 jobMap.Add(companyName, job);
                             }
                         }

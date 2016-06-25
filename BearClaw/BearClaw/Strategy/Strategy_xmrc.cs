@@ -59,6 +59,7 @@ namespace BearClaw.Strategy
                             if (addressText.Contains(item))
                             {
                                 var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
+                                job.Ext1 = GetDomain();
                                 jobMap.Add(companyName, job);
                             }
                         }

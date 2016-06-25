@@ -115,7 +115,8 @@ namespace BearClaw
             dgMain.ItemsSource = _jobCollections;
             tblCount.Text = _jobCollections.Count.ToString();
 
-            _timer.Interval = TimeSpan.FromSeconds(15);
+            _timer.Interval = TimeSpan.FromSeconds(30);
+            
             _timer.Tick += (s, e) =>
             {
                 BeginQueryTask();

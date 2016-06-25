@@ -7,11 +7,13 @@ using BearClaw.Models;
 using HtmlAgilityPack;
 using BearClaw.Common;
 using System.Diagnostics;
+using System.Net;
 
 namespace BearClaw.Strategy
 {
     class Strategy_51job : MyStrategy
     {
+        private const string addressMark = "公司地址：";
         public override string GetDomain()
         {
             return "search.51job.com";
@@ -31,15 +33,44 @@ namespace BearClaw.Strategy
             {
                 foreach (var htmlNode in htmlNodes)
                 {
+                    //var companyName = htmlNode.InnerText;
+                    //if (!jobMap.ContainsKey(companyName))
+                    //{
+                    //    var address = htmlNode.ParentNode.ParentNode.ChildNodes[4].FirstChild;
+                    //    if (address != null && address.InnerText != null && address.InnerText.Contains(App.Area))
+                    //    {
+                    //        var href = htmlNode.GetAttributeValue("href", "");
+                    //        var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
+                    //        job.Ext1 = GetDomain();
+                    //        jobMap.Add(companyName,job);
+                    //    }
+                    //}
                     var companyName = htmlNode.InnerText;
                     if (!jobMap.ContainsKey(companyName))
                     {
-                        var address = htmlNode.ParentNode.ParentNode.ChildNodes[4].FirstChild;
-                        if (address != null && address.InnerText != null && address.InnerText.Contains(App.Area))
+                        var href = htmlNode.GetAttributeValue("href", "");
+                        var addressText = "";
+
+                        var webClient = new WebClient();
+                        webClient.Encoding = Encoding.GetEncoding("GB2312");
+                        var content = webClient.DownloadString(href);
+                        var companyDoc = new HtmlDocument();
+                        companyDoc.LoadHtml(content);
+                        var addressNode = companyDoc.DocumentNode.SelectSingleNode(string.Format("//span[contains(text(),'{0}')]", addressMark));
+                        if (addressNode != null)
                         {
-                            var href = htmlNode.GetAttributeValue("href", "");
-                            var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
-                            jobMap.Add(companyName,job);
+                            addressText = addressNode.NextSibling.InnerText;
+                        }
+                        foreach (var item in App.Area_Sub)
+                        {
+                            if (addressText.Contains(item))
+                            {
+                                var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
+                                job.Ext1 = GetDomain();
+                                if (!jobMap.ContainsKey(companyName)) {
+                                    jobMap.Add(companyName, job);
+                                }
+                            }
                         }
                     }
                 }

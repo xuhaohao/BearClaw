@@ -37,6 +37,7 @@ namespace BearClaw.Strategy
                     {
                         var href = htmlNode.GetAttributeValue("href", "");
                         var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
+                        job.Ext1 = GetDomain();
                         jobMap.Add(companyName,job);
                     } 
                 }

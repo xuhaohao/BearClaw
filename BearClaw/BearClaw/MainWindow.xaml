@@ -64,7 +64,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="公司名称" MinWidth="200" />
                     <DataGridHyperlinkColumn Binding="{Binding Url}" Header="公司信息Url" MinWidth="200" Width="*" />
-                    <DataGridTextColumn Binding="{Binding Tel}" Header="备注信息" MinWidth="200"/>
+                    <DataGridTextColumn Binding="{Binding Ext1}" Header="来源" MinWidth="200"/>
                     <DataGridTextColumn Binding="{Binding TimeTag}" Header="抓取时间" MinWidth="200"/>
                 </DataGrid.Columns>
             </DataGrid>

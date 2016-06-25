@@ -40,6 +40,7 @@ namespace BearClaw.Strategy
                             if (!jobMap.ContainsKey(companyName))
                             {
                                 var job = new Jobs() { Name = companyName, Url = JoinUrl("http://xm.597.com", href), TimeTag = DateTime.Now.ToString() };
+                                job.Ext1 = GetDomain();
                                 jobMap.Add(companyName, job);
                             }
                         }

@@ -37,6 +37,7 @@ namespace BearClaw.Strategy
                     if (!jobMap.ContainsKey(companyName) && companyName.Contains(App.Area))
                     {
                         var job = new Jobs() { Name = companyName, Url = JoinUrl(@"http://www.gbeport.gov.cn", href), TimeTag = DateTime.Now.ToString() };
+                        job.Ext1 = GetDomain();
                         jobMap.Add(companyName, job);
                     }
                 }
