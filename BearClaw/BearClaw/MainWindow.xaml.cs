@@ -114,7 +114,7 @@ namespace BearClaw
             _jobCollections = Db.GetJobs();
             dgMain.ItemsSource = _jobCollections;
             tblCount.Text = _jobCollections.Count.ToString();
-
+            
             _timer.Interval = TimeSpan.FromSeconds(30);
             
             _timer.Tick += (s, e) =>

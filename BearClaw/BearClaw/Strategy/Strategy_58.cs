@@ -7,14 +7,16 @@ using BearClaw.Models;
 using HtmlAgilityPack;
 using BearClaw.Common;
 using System.Diagnostics;
+using System.Net;
 
 namespace BearClaw.Strategy
 {
     class Strategy_58 : MyStrategy
     {
+        private const string addressMark = "联系地址：";
         public override string GetDomain()
         {
-            return "zs.58.com";
+            return "xm.58.com";
         }
 
         public override string GetUri()
@@ -27,7 +29,7 @@ namespace BearClaw.Strategy
             var jobMap = new Dictionary<string, Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
-            var htmlNodes = doc.DocumentNode.SelectNodes("//*[@id=\"jingzhun\"]/dd[2]/a");
+            var htmlNodes = doc.DocumentNode.SelectNodes("//a[@class=\"fl\"]");
             if (htmlNodes != null)
             {
                 foreach (var htmlNode in htmlNodes)
@@ -36,9 +38,30 @@ namespace BearClaw.Strategy
                     if (!jobMap.ContainsKey(companyName))
                     {
                         var href = htmlNode.GetAttributeValue("href", "");
-                        var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
-                        job.Ext1 = GetDomain();
-                        jobMap.Add(companyName,job);
+
+                        var webClient = new WebClient();
+                        webClient.Encoding = Encoding.UTF8;
+                        var content = webClient.DownloadString(href);
+                        var companyDoc = new HtmlDocument();
+                        companyDoc.LoadHtml(content);
+                        var addressText = "";
+                        var addressNode = companyDoc.DocumentNode.SelectSingleNode("//td[@class=\"adress\"]");
+                        if (addressNode != null)
+                        {
+                            addressText = addressNode.InnerText;
+                        }
+                        foreach (var item in App.Area_Sub)
+                        {
+                            if (addressText.Contains(item))
+                            {
+                                var job = new Jobs() { Name = companyName, Url = href, TimeTag = DateTime.Now.ToString() };
+                                job.Ext1 = GetDomain();
+                                if (!jobMap.ContainsKey(companyName)) {
+                                    jobMap.Add(companyName, job);
+                                }
+                            }
+                        }
+
                     } 
                 }
             }

@@ -16,9 +16,15 @@ namespace BearClaw.Strategy
             return "xm.597.com";
         }
 
+        int page = 0;
+
         public override string GetUri()
         {
-            return @"http://xm.597.com/zhaopin/g3502c3/?q=%E5%A4%96%E8%B4%B8";
+            //if (page > 44) {
+                return @"http://xm.597.com/zhaopin/g3502c3/?q=%E5%A4%96%E8%B4%B8";
+            //}
+            //page++;
+            //return @"http://xm.597.com/zhaopin/g3502c3/?q=%E5%A4%96%E8%B4%B8&page="+ page;
         }
 
         public override Dictionary<string, Jobs> Strategy(string htmlText)
