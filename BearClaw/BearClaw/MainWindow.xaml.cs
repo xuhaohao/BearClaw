@@ -88,6 +88,8 @@ namespace BearClaw
             rbnBegin.Checked += (s, e) =>
             {
                 _naviUrlIndex = 0;
+                BeginQueryTask();
+
                 _timer.IsEnabled = true;
                 mpbMain.Visibility = Visibility.Visible;
             };
@@ -115,7 +117,7 @@ namespace BearClaw
             dgMain.ItemsSource = _jobCollections;
             tblCount.Text = _jobCollections.Count.ToString();
             
-            _timer.Interval = TimeSpan.FromSeconds(30);
+            _timer.Interval = TimeSpan.FromSeconds(50);
             
             _timer.Tick += (s, e) =>
             {

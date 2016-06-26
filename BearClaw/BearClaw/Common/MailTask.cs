@@ -92,7 +92,7 @@ namespace BearClaw.Common
                 }
             }
 
-            mailMessage.From = new MailAddress(userName, App.Area + "robot");
+            mailMessage.From = new MailAddress(userName, App.Area + "_robot");
             mailMessage.Subject = subject;
             mailMessage.SubjectEncoding = Encoding.UTF8;
             mailMessage.Body = content;
@@ -101,7 +101,7 @@ namespace BearClaw.Common
             mailMessage.Priority = MailPriority.High;
 
             var smtp = new SmtpClient(eMailServer, 25) { Credentials = new NetworkCredential(userName, pwd) };
-            //smtp.EnableSsl = true;
+            smtp.EnableSsl = false;
             object userState = mailMessage;
 
             try
