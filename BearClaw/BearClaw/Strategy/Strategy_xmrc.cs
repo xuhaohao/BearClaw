@@ -60,7 +60,10 @@ namespace BearClaw.Strategy
                             {
                                 var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
                                 job.Ext1 = GetDomain();
-                                jobMap.Add(companyName, job);
+                                if (!jobMap.ContainsKey(companyName))
+                                {
+                                    jobMap.Add(companyName, job);
+                                }
                             }
                         }
                     }
