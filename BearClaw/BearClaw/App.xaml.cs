@@ -25,6 +25,7 @@ namespace BearClaw
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
             log4net.Config.XmlConfigurator.Configure();
             this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             MainWindow = new MainWindow();

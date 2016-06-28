@@ -25,41 +25,19 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <RadioButton Content="开始" x:Name="rbnBegin" FontSize="16" Grid.Column="0"/>
-                <RadioButton Content="停止" x:Name="rbnStop" FontSize="16" IsChecked="True" Grid.Column="1"/>
-                <TextBlock  x:Name="tblQueryCount" Foreground="#7741b1e1" Margin="8,2" Grid.Column="3" Text="[0]"/>
+                <TextBlock  x:Name="tblQueryCount" Foreground="#7741b1e1" Margin="4,2" Grid.Column="1" Text="[0]"/>
+                <RadioButton Content="停止" x:Name="rbnStop" FontSize="16" IsChecked="True" Grid.Column="2"/>
+                <Button Content="导出" x:Name="btnExport" Grid.Column="4" Margin="8,2" Click="btnExport_Click"/>
             </Grid>
 
             <controls:MetroProgressBar Grid.Row="1" Height="15" Margin="4" x:Name="mpbMain" IsIndeterminate="True" Visibility="Collapsed"/>
             <WebBrowser Grid.Row="2" Grid.ColumnSpan="2" x:Name="webBrowser" Visibility="Collapsed"/>
-            <!--<ListBox Grid.Row="2" Grid.ColumnSpan="2"  x:Name="dgMain" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid  Margin="4">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"  />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Border  Margin="2" Grid.ColumnSpan="2" Grid.RowSpan="3" />
-                            <TextBlock Text="公司名称"  Margin="4" />
-                            <TextBlock Text="{Binding Name}" Grid.Column="1" Margin="4" />
-                            <TextBlock Text="公司信息Url" Grid.Row="1"  Margin="4" />
-                            
-                            <TextBlock Text="{Binding Url}"  Grid.Row="1" Grid.Column="1" Margin="4" />
-                            <TextBlock Text="抓取时间" Grid.Row="2"  Margin="4" />
-                            <TextBlock Text="{Binding TimeTag}"  Grid.Row="2" Grid.Column="1" Margin="4" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
+            
             <DataGrid Grid.Row="2" Grid.ColumnSpan="2"  x:Name="dgMain" AutoGenerateColumns="False"  Hyperlink.Click="DataGridHyperlinkColumn_Click">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="公司名称" MinWidth="200" />

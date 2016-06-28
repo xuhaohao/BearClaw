@@ -19,6 +19,8 @@ using System.Reflection;
 using System.Threading;
 using BearClaw.Strategy;
 using System.Windows.Documents;
+using Microsoft.Win32;
+using Codaxy.Xlio;
 
 namespace BearClaw
 {
@@ -49,7 +51,7 @@ namespace BearClaw
 
 
         private void Init()
-        { 
+        {
             //初始化黑名单数据
             webBrowser.LoadCompleted += (s, e) =>
             {
@@ -97,11 +99,13 @@ namespace BearClaw
             rbnStop.Checked += (s, e) =>
             {
                 _timer.IsEnabled = false;
-                MailTask.Release(sendResult => {
+                MailTask.Release(sendResult =>
+                {
                     if (sendResult.Count > 0)
                     {
                         Db.CreateUpdate(sendResult);
-                        Dispatcher.Invoke(() => {
+                        Dispatcher.Invoke(() =>
+                        {
                             foreach (var job in sendResult)
                             {
                                 _jobCollections.Insert(0, job);
@@ -116,9 +120,9 @@ namespace BearClaw
             _jobCollections = Db.GetJobs();
             dgMain.ItemsSource = _jobCollections;
             tblCount.Text = _jobCollections.Count.ToString();
-            
+
             _timer.Interval = TimeSpan.FromSeconds(50);
-            
+
             _timer.Tick += (s, e) =>
             {
                 BeginQueryTask();
@@ -150,9 +154,10 @@ namespace BearClaw
         /// </summary>
         /// <param name="htmlDocument"></param>
         /// <returns></returns>
-        public void ParseHtml(string domain,string htmlText)
+        public void ParseHtml(string domain, string htmlText)
         {
-            if (MyStrategy.Dictionary.ContainsKey(domain)) {
+            if (MyStrategy.Dictionary.ContainsKey(domain))
+            {
 
                 var myStrategy = MyStrategy.Dictionary[domain];
                 var list = myStrategy.Strategy(htmlText);
@@ -160,10 +165,13 @@ namespace BearClaw
                 List<Jobs> createResult = Db.Valid(list);
                 log.DebugFormat("网址{0}的查询结果为{1}", myStrategy.GetDomain(), createResult.Count);
 
-                MailTask.Put(_queryCount - 1, createResult,sendResult => {
-                    if (sendResult.Count > 0) {
+                MailTask.Put(_queryCount - 1, createResult, sendResult =>
+                {
+                    if (sendResult.Count > 0)
+                    {
                         Db.CreateUpdate(sendResult);
-                        Dispatcher.Invoke(() => {
+                        Dispatcher.Invoke(() =>
+                        {
                             foreach (var job in sendResult)
                             {
                                 _jobCollections.Insert(0, job);
@@ -189,12 +197,24 @@ namespace BearClaw
         private void DataGridHyperlinkColumn_Click(object sender, RoutedEventArgs e)
         {
             var dg = sender as DataGrid;
-            if (e.OriginalSource is Hyperlink && dg.SelectedItem is Jobs) {
+            if (e.OriginalSource is Hyperlink && dg.SelectedItem is Jobs)
+            {
                 var row = dg.SelectedItem as Jobs;
                 Process.Start(row.Url);
             }
         }
 
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); //定义打开的默认文件夹位置
+            saveFileDialog.FileName = "检索公司历史记录_" + DateTime.Now.ToShortDateString();
+            saveFileDialog.Filter = "Excel文件|*.xlsx"; //打开对话框显示文件筛选器
+            
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                Excels.Export(saveFileDialog.FileName,_jobCollections);
+            }
+        }
     }
-
 }
