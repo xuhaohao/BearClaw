@@ -11,7 +11,6 @@ using System.Text;
 using System.Windows;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using SqliteORM;
 using System.Diagnostics;
 
 namespace BearClaw.Common

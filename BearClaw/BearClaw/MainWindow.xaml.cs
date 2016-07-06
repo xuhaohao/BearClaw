@@ -145,7 +145,15 @@ namespace BearClaw
             if (webBrowser.IsLoaded)
             {
                 var uri = MyStrategy.List[_naviUrlIndex].GetUri();
-                webBrowser.Navigate(uri);
+
+                try
+                {
+                    webBrowser.Navigate(uri);
+                }
+                catch (Exception ex)
+                {
+                    log.DebugFormat("导航到{0}地址出错:{0}", uri, ex.Message);
+                }
             }
         }
 
@@ -208,7 +216,7 @@ namespace BearClaw
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); //定义打开的默认文件夹位置
-            saveFileDialog.FileName = "检索公司历史记录_" + DateTime.Now.ToShortDateString();
+            saveFileDialog.FileName = "检索公司历史记录_" + DateTime.Now.ToString("D");
             saveFileDialog.Filter = "Excel文件|*.xlsx"; //打开对话框显示文件筛选器
             
             if (saveFileDialog.ShowDialog() == true)

@@ -72,6 +72,30 @@ namespace BearClaw.Common
             }
         }
 
+        private static void SendMail2(string mailId, string subject, string content, Action<List<Jobs>> sendResult) {
+
+
+
+            //HttpClient client = new HttpClient();
+            //HttpPost postMethod = new HttpPost(new Uri("http://sendcloud.sohu.com/webapi/mail.send.json"));
+
+            //MultipartEntity multipartEntity = new MultipartEntity();
+            //postMethod.Entity = multipartEntity;
+
+            //multipartEntity.AddBody(new StringBody(Encoding.UTF8, "api_user", "xhhxhh_test_zlDl5d")); # 使用api_user和api_key进行验证
+            //  multipartEntity.AddBody(new StringBody(Encoding.UTF8, "api_key", "H0we6eWrQltSUjMW"));
+            //multipartEntity.AddBody(new StringBody(Encoding.UTF8, "from", "service@sendcloud.im")); # 发信人，用正确邮件地址替代
+            //  multipartEntity.AddBody(new StringBody(Encoding.UTF8, "fromname", "SendCloud测试邮件"));
+            //multipartEntity.AddBody(new StringBody(Encoding.UTF8, "to", "xuhaogogo@live.cn")); # 收件人地址，用正确邮件地址替代，多个地址用';'分隔
+            //  multipartEntity.AddBody(new StringBody(Encoding.UTF8, "subject", "来自SendCloud的第一封邮件！"));
+            //multipartEntity.AddBody(new StringBody(Encoding.UTF8, "html", "你太棒了！你已成功的从SendCloud发送了一封测试邮件，接下来快登录前台去完善账户信息吧！"));
+
+            //HttpResponse response = client.Execute(postMethod);
+
+            //Console.WriteLine("Response Code: " + response.ResponseCode);
+            //Console.WriteLine("Response Content: " + EntityUtils.ToString(response.Entity));
+        }
+
 
 
         private static void SendMail(string mailId,string subject , string content, Action<List<Jobs>> sendResult)
@@ -87,8 +111,8 @@ namespace BearClaw.Common
             {
                 if (param_receive_username.Value != null && param_receive_username.Value.Trim() != "")
                 {
-                    mailMessage.To.Add(@"370081393@qq.com");
-                    //mailMessage.To.Add(param_receive_username.Value.Trim());
+                    //mailMessage.To.Add(@"370081393@qq.com");
+                    mailMessage.To.Add(param_receive_username.Value.Trim());
                 }
             }
 
@@ -124,7 +148,14 @@ namespace BearClaw.Common
             }
             catch (Exception ex)
             {
-                log.Error(string.Format("邮件[{0}]发送失败:", mailId), ex);
+                try
+                {
+                    log.Error(string.Format("邮件[{0}]发送失败:", mailId), ex);
+                }
+                catch (Exception ex2)
+                {
+                    log.DebugFormat("ERROR,邮件[{0}]发送失败:{1}", mailId, ex2.Message);
+                }
             }
         }
     }

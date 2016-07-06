@@ -1,4 +1,4 @@
-﻿using SqliteORM;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace BearClaw.Common
 {
-    [Table]
+
     public class Params : INotifyPropertyChanged
     {
-        [PrimaryKey]
+
         public long Id { get; set; }
 
         private string _fieldGroup;
-        [Field]
+
         public string FieldGroup {
             get { return _fieldGroup; }
             set
@@ -26,7 +26,7 @@ namespace BearClaw.Common
         }
 
         private string _name;
-        [Field]
+
         public string Name {
             get { return _name; }
             set
@@ -37,7 +37,7 @@ namespace BearClaw.Common
         }
 
         private string _value;
-        [Field]
+
         public string Value {
             get { return _value; }
             set
@@ -54,8 +54,9 @@ namespace BearClaw.Common
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                Db.UpdateParamValue(this);
             }
-            Db.UpdateParamValue(this);
+            
         }
     }
 }
