@@ -36,6 +36,7 @@ namespace BearClaw.Strategy
                     var name = htmlNode.InnerText;
                     if (name != null && name.Contains(App.Area)) {
                         var job = new Jobs() { Name = htmlNode.InnerText, Url = JoinUrl(@"http://www.gbeport.gov.cn", href), TimeTag = DateTime.Now.ToString() };
+                        job.Ext1 = GetDomain();
                         jobs.Add(job);
                     }
                 }

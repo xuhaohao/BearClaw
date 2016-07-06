@@ -31,14 +31,15 @@ namespace BearClaw.Strategy
             {
                 foreach (var htmlNode in htmlNodes)
                 {
-                        var address = htmlNode.ParentNode.ParentNode.ChildNodes[4].FirstChild;
+                    var address = htmlNode.ParentNode.ParentNode.ChildNodes[4].FirstChild;
 
-                        if (address != null && address.InnerText != null && address.InnerText.Contains(App.Area))
-                        {
-                            var href = htmlNode.GetAttributeValue("href", "");
-                            var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
-                            jobs.Add(job);
-                        }
+                    if (address != null && address.InnerText != null && address.InnerText.Contains(App.Area))
+                    {
+                        var href = htmlNode.GetAttributeValue("href", "");
+                        var job = new Jobs() { Name = htmlNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
+                        job.Ext1 = GetDomain();
+                        jobs.Add(job);
+                    }
                 }
             }
             return jobs;

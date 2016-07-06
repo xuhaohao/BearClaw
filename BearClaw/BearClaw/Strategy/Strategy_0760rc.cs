@@ -36,6 +36,7 @@ namespace BearClaw.Strategy
                 {
                     var href = htmlNode.GetAttributeValue("href", "");
                     var job = new Jobs() { Name = htmlNode.InnerText, Url = JoinUrl(@"http://www.0760rc.com/search", href), TimeTag = DateTime.Now.ToString() };
+                    job.Ext1 = GetDomain();
                     jobs.Add(job);
                 }
             }

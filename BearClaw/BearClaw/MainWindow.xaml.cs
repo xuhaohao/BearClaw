@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Threading;
 using BearClaw.Strategy;
 using System.Windows.Documents;
+using Microsoft.Win32;
 
 namespace BearClaw
 {
@@ -189,6 +190,19 @@ namespace BearClaw
             if (e.OriginalSource is Hyperlink && dg.SelectedItem is Jobs) {
                 var row = dg.SelectedItem as Jobs;
                 Process.Start(row.Url);
+            }
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); //定义打开的默认文件夹位置
+            saveFileDialog.FileName = "检索公司历史记录_" + DateTime.Now.ToString("D");
+            saveFileDialog.Filter = "Excel文件|*.xlsx"; //打开对话框显示文件筛选器
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                Excels.Export(saveFileDialog.FileName, _jobCollections);
             }
         }
 
