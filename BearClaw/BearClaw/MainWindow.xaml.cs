@@ -145,7 +145,6 @@ namespace BearClaw
             if (webBrowser.IsLoaded)
             {
                 var uri = MyStrategy.List[_naviUrlIndex].GetUri();
-
                 try
                 {
                     webBrowser.Navigate(uri);
