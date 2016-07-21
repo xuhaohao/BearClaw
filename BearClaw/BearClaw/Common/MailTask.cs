@@ -87,8 +87,8 @@ namespace BearClaw.Common
             {
                 if (param_receive_username.Value != null && param_receive_username.Value.Trim() != "")
                 {
-                    mailMessage.To.Add(@"370081393@qq.com");
-                    //mailMessage.To.Add(param_receive_username.Value.Trim());
+                    //mailMessage.To.Add(@"370081393@qq.com");
+                    mailMessage.To.Add(param_receive_username.Value.Trim());
                 }
             }
 
