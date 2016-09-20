@@ -35,7 +35,7 @@ namespace BearClaw.Strategy
                     if (trNode.HasChildNodes) {
                         var jobNode = trNode.ChildNodes[7].FirstChild.FirstChild;
                         var href = jobNode.GetAttributeValue("href", "");
-                        if (jobNode.InnerText != null && jobNode.InnerText.Trim().Length > 0)
+                        if (!string.IsNullOrEmpty(jobNode.InnerText) && jobNode.InnerText.Contains(App.Area))
                         {
                             var job = new Jobs() { Name = jobNode.InnerText, Url = JoinUrl(@"http://zs.job-sky.com/qiuzhi", href), TimeTag = DateTime.Now.ToString() };
                             job.Ext1 = GetDomain();

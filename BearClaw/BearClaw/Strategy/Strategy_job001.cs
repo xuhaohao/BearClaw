@@ -40,9 +40,12 @@ namespace BearClaw.Strategy
                     if (jobName.Contains("外贸")) {
                         var jobNode = htmlNode.ParentNode.ParentNode.ChildNodes[5].FirstChild;
                         var href = jobNode.GetAttributeValue("href", "");
-                        var job = new Jobs() { Name = jobNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
-                        job.Ext1 = GetDomain();
-                        jobs.Add(job);
+                        if (!string.IsNullOrEmpty(jobNode.InnerText) && jobNode.InnerText.Contains(App.Area))
+                        {
+                            var job = new Jobs() { Name = jobNode.InnerText, Url = href, TimeTag = DateTime.Now.ToString() };
+                            job.Ext1 = GetDomain();
+                            jobs.Add(job);
+                        }
                     }
 
                 }

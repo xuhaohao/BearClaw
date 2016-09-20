@@ -31,9 +31,12 @@ namespace BearClaw.Strategy
             foreach (var item in mc)
             {
                 var strValue = item.ToString();
-                var job = new Jobs() { Name = strValue, TimeTag = DateTime.Now.ToString() };
-                job.Ext1 = GetDomain();
-                jobs.Add(job);
+                if (!string.IsNullOrEmpty(strValue) && strValue.Contains(App.Area))
+                {
+                    var job = new Jobs() { Name = strValue, TimeTag = DateTime.Now.ToString() };
+                    job.Ext1 = GetDomain();
+                    jobs.Add(job);
+                }
             }
             return jobs;
         }
