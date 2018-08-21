@@ -9,6 +9,7 @@ namespace BearClaw.Strategy
         public static readonly Dictionary<string, MyStrategy> Dictionary = new Dictionary<string, MyStrategy>();
         public static readonly List<MyStrategy> List = new List<MyStrategy>();
 
+        public static readonly List<string> KewWordList = new List<string>();
         static MyStrategy()
         {
             //StrategyList.Add(new Strategy_job0663());
@@ -25,10 +26,12 @@ namespace BearClaw.Strategy
             {
                 Dictionary.Add(item.GetDomain(), item);
             }
+
+            KewWordList.AddRange(new string[] { "外贸", "出口", "国际", "海外" , "外销" , "亚马逊", "Amazon", "跨境" , "eBay" , "Aliexpress" , "Wish", "Lazada", "天猫", "B2B" });
         }
 
         public abstract string GetDomain();
-        public abstract string GetUri();
+        public abstract string GetUri(string keyword);
         public abstract List<Jobs> Strategy(string htmlText);
 
         protected string JoinUrl(string baseUrl, string other) {

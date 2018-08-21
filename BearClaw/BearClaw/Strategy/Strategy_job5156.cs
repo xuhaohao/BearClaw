@@ -17,9 +17,11 @@ namespace BearClaw.Strategy
             return "www.job5156.com";
         }
 
-        public override string GetUri()
+        public override string GetUri(string keyword)
         {
-            return @"http://www.job5156.com/s/result/kt0_kw-外贸_wl14040000.html";
+            var url = String.Format("http://www.job5156.com/s/result/kt0_kw-{0}_wl14040000.html", keyword);
+            return url;
+            //return @"http://www.job5156.com/s/result/kt0_kw-外贸_wl14040000.html";
         }
         public override List<Jobs> Strategy(string htmlText)
         {

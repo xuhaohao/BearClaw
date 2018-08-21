@@ -7,6 +7,7 @@ using BearClaw.Models;
 using HtmlAgilityPack;
 using BearClaw.Common;
 using System.Diagnostics;
+using System.Web;
 
 namespace BearClaw.Strategy
 {
@@ -17,9 +18,13 @@ namespace BearClaw.Strategy
             return "zs.58.com";
         }
 
-        public override string GetUri()
+        public override string GetUri(string keyword)
         {
-            return @"http://zs.58.com/job/?PGTID=0d100000-0030-3961-47ed-05af6f7f3a78&ClickID=6&key=%252525E5%252525A4%25252596%252525E8%252525B4%252525B8";
+            var key = HttpUtility.UrlEncode(keyword, Encoding.UTF8);
+            key = HttpUtility.UrlEncode(key, Encoding.UTF8);
+            var url = String.Format(@"http://zs.58.com/job/?PGTID=0d100000-0030-3961-47ed-05af6f7f3a78&ClickID=6&key={0}", key);
+            return url;
+            //return @"http://zs.58.com/job/?PGTID=0d100000-0030-3961-47ed-05af6f7f3a78&ClickID=6&key=%252525E5%252525A4%25252596%252525E8%252525B4%252525B8";
         }
 
         public override List<Jobs> Strategy(string htmlText)

@@ -17,7 +17,7 @@ namespace BearClaw.Strategy
             return "www.gbeport.gov.cn";
         }
 
-        public override string GetUri()
+        public override string GetUri(string keyword)
         {
             return @"http://www.gbeport.gov.cn/CardInfoList.aspx";
         }

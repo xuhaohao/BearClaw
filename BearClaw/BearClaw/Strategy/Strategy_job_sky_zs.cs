@@ -17,8 +17,11 @@ namespace BearClaw.Strategy
             return "zs.job-sky.com";
         }
 
-        public override string GetUri()
+        private string keyword;
+
+        public override string GetUri(string keyword)
         {
+            this.keyword = keyword;
             return @"http://zs.job-sky.com/qiuzhi/search.aspx";
         }
         public override List<Jobs> Strategy(string htmlText)
@@ -26,7 +29,7 @@ namespace BearClaw.Strategy
             List<Jobs> jobs = new List<Jobs>();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(htmlText);
-            var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@href,'ViewCompanyDetails.aspx?aid=') and contains(text(),'外贸')]");
+            var htmlNodes = doc.DocumentNode.SelectNodes("//a[contains(@href,'ViewCompanyDetails.aspx?aid=') and contains(text(),'"+ this.keyword +"')]");
             if (htmlNodes != null)
             {
                 foreach (var htmlNode in htmlNodes)

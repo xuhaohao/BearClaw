@@ -40,7 +40,11 @@ namespace BearClaw
 
         private static log4net.ILog log = log4net.LogManager.GetLogger(typeof(MainWindow));
 
-        private int _naviUrlIndex;
+        //private int _naviUrlIndex;
+
+        //private int _keywordListIndex;
+
+        private int _queryIndex;                    //最大值为策略列表长度*关键字长度;
 
         private ObservableCollection<Jobs> _jobCollections;
 
@@ -88,7 +92,8 @@ namespace BearClaw
 
             rbnBegin.Checked += (s, e) =>
             {
-                _naviUrlIndex = 0;
+                //_naviUrlIndex = 0;
+                _queryIndex = 0;
                 _timer.IsEnabled = true;
                 mpbMain.Visibility = Visibility.Visible;
             };
@@ -121,7 +126,8 @@ namespace BearClaw
             {
                 BeginQueryTask();
                 //指向下一个网址
-                _naviUrlIndex = _naviUrlIndex < MyStrategy.List.Count - 1 ? _naviUrlIndex + 1 : 0;
+                //_naviUrlIndex = _naviUrlIndex < MyStrategy.List.Count - 1 ? _naviUrlIndex + 1 : 0;
+                _queryIndex = _queryIndex < MyStrategy.List.Count * MyStrategy.KewWordList.Count - 1 ? _queryIndex + 1 : 0;
             };
             _timer.Start();
             _timer.IsEnabled = false;
@@ -138,7 +144,13 @@ namespace BearClaw
             //开始索引下一个Url
             if (webBrowser.IsLoaded)
             {
-                var uri = MyStrategy.List[_naviUrlIndex].GetUri();
+                var strategyIndex = _queryIndex / MyStrategy.List.Count;
+                var keywordIndex = _queryIndex % MyStrategy.KewWordList.Count;
+                log.Info("strategyIndex=" + strategyIndex + ",keywordIndex=" + keywordIndex);
+                MyStrategy myStrategy = MyStrategy.List[strategyIndex];
+                var keyword = MyStrategy.KewWordList[keywordIndex];
+                log.Info("strategyIndex[" + myStrategy.GetDomain() + "]=" + strategyIndex + ",keywordIndex=" + keywordIndex + ",keyword="+ keyword);
+                var uri = myStrategy.GetUri(keyword);
                 webBrowser.Navigate(uri);
             }
         }

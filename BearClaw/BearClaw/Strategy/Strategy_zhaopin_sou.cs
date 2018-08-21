@@ -12,9 +12,11 @@ namespace BearClaw.Strategy
             return "sou.zhaopin.com";
         }
 
-        public override string GetUri()
+        public override string GetUri(string keyword)
         {
-            return string.Format("http://sou.zhaopin.com/jobs/searchresult.ashx?jl={0}&kw=外贸&sm=0&p=1&sf=0&st=99999&isadv=1", App.Area); ;
+            var url = string.Format("http://sou.zhaopin.com/jobs/searchresult.ashx?jl={0}&kw={1}&sm=0&p=1&sf=0&st=99999&isadv=1", App.Area, keyword);
+            return url;
+            //return string.Format("http://sou.zhaopin.com/jobs/searchresult.ashx?jl={0}&kw=外贸&sm=0&p=1&sf=0&st=99999&isadv=1", App.Area); ;
         }
         public override List<Jobs> Strategy(string htmlText)
         {

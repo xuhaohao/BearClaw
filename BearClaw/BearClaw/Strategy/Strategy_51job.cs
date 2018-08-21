@@ -7,6 +7,7 @@ using BearClaw.Models;
 using HtmlAgilityPack;
 using BearClaw.Common;
 using System.Diagnostics;
+using System.Web;
 
 namespace BearClaw.Strategy
 {
@@ -17,9 +18,12 @@ namespace BearClaw.Strategy
             return "search.51job.com";
         }
 
-        public override string GetUri()
+        public override string GetUri(string keyword)
         {
-            return @"http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=030700%2C00&funtype=0000&industrytype=00&keyword=%E5%A4%96%E8%B4%B8&keywordtype=2&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9";
+            var key = HttpUtility.UrlEncode(keyword, Encoding.UTF8);
+            //%E5%A4%96%E8%B4%B8
+            var url = String.Format(@"http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=030700%2C00&funtype=0000&industrytype=00&keyword={0}&keywordtype=2&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9", key);
+            return url;
         }
         public override List<Jobs> Strategy(string htmlText)
         {

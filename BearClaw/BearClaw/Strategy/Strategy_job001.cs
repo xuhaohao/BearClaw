@@ -7,6 +7,7 @@ using BearClaw.Models;
 using HtmlAgilityPack;
 using BearClaw.Common;
 using System.Diagnostics;
+using System.Web;
 
 namespace BearClaw.Strategy
 {
@@ -17,9 +18,12 @@ namespace BearClaw.Strategy
             return "www.job001.cn";
         }
 
-        public override string GetUri()
+        public override string GetUri(string keyword)
         {
-            return @"http://www.job001.cn/jobs/jobs-list.php?listType=&key=%CD%E2%C3%B3&keyType=0&trade=&jobcategory=&citycategory=308&wage=&education=&isEduAbove=1&experience=&isExpAbove=1&nature=&settr=&sort=district&com_nature=&com_scale=&lang=&experienceMin=&experienceMax=&educationMin=&educationMax=&wageMin=&wageMax=&isDistrict=0&sortField=";
+            var key = HttpUtility.UrlEncode(keyword, Encoding.GetEncoding("GB2312"));
+            var url = String.Format(@"http://www.job001.cn/jobs/jobs-list.php?listType=&key={0}&keyType=0&trade=&jobcategory=&citycategory=308&wage=&education=&isEduAbove=1&experience=&isExpAbove=1&nature=&settr=&sort=district&com_nature=&com_scale=&lang=&experienceMin=&experienceMax=&educationMin=&educationMax=&wageMin=&wageMax=&isDistrict=0&sortField=", key);
+            return url;
+            //return @"http://www.job001.cn/jobs/jobs-list.php?listType=&key=%CD%E2%C3%B3&keyType=0&trade=&jobcategory=&citycategory=308&wage=&education=&isEduAbove=1&experience=&isExpAbove=1&nature=&settr=&sort=district&com_nature=&com_scale=&lang=&experienceMin=&experienceMax=&educationMin=&educationMax=&wageMin=&wageMax=&isDistrict=0&sortField=";
         }
 
 

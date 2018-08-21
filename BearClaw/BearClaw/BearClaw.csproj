@@ -96,6 +96,7 @@
       <HintPath>..\..\Dlls\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -124,12 +125,19 @@
     <Compile Include="Strategy\Strategy_0760rc.cs" />
     <Compile Include="Strategy\Strategy_51job.cs" />
     <Compile Include="Strategy\Strategy_58.cs" />
+    <Compile Include="Strategy\Strategy_Baidu.cs" />
+    <Compile Include="Strategy\Strategy_Boss.cs" />
+    <Compile Include="Strategy\Strategy_Chinahr.cs" />
+    <Compile Include="Strategy\Strategy_ganji.cs" />
     <Compile Include="Strategy\Strategy_gbeport.cs" />
+    <Compile Include="Strategy\Strategy_job1001.cs" />
     <Compile Include="Strategy\Strategy_job_sky_zs.cs" />
     <Compile Include="Strategy\Strategy_job001.cs" />
     <Compile Include="Strategy\Strategy_job0663.cs" />
     <Compile Include="Strategy\Strategy_job5156.cs" />
+    <Compile Include="Strategy\Strategy_Liepin.cs" />
     <Compile Include="Strategy\Strategy_zhaopin_sou.cs" />
+    <Compile Include="Strategy\Strategy_zsjjob.cs" />
     <Page Include="ParamView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
