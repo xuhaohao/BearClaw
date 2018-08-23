@@ -22,7 +22,7 @@ namespace BearClaw.Strategy
         {
             var key = HttpUtility.UrlEncode(keyword, Encoding.GetEncoding("GB2312"));
             //var key = System.Text.Encoding.UTF8.GetBytes(keyword);
-            //% cd % e2 % c3 % b3
+            //%cd%e2%c3%b3
             var url = String.Format(@"http://www.0760rc.com/search/offer_search_result.aspx?keyword={0}&jcity1Hidden=101000&areatitle=&lat=0&lng=0&zoom=0&ma=0", key);
             return url;
         }

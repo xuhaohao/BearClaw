@@ -20,6 +20,8 @@ using System.Threading;
 using BearClaw.Strategy;
 using System.Windows.Documents;
 using Microsoft.Win32;
+using System.Web;
+using System.Text;
 
 namespace BearClaw
 {
@@ -77,6 +79,7 @@ namespace BearClaw
                 {
                     log.Error("webBrowser.LoadCompleted:", ex);
                 }
+
             };
 
             webBrowser.Navigating += (s, e) =>
@@ -128,11 +131,17 @@ namespace BearClaw
                 //指向下一个网址
                 //_naviUrlIndex = _naviUrlIndex < MyStrategy.List.Count - 1 ? _naviUrlIndex + 1 : 0;
                 _queryIndex = _queryIndex < MyStrategy.List.Count * MyStrategy.KewWordList.Count - 1 ? _queryIndex + 1 : 0;
+
+                log.Info("current queryIndex = " + _queryIndex);
             };
             _timer.Start();
             _timer.IsEnabled = false;
 
             log.Info("初始化MainWindow 完成");
+            //var key = HttpUtility.UrlEncode("外贸", Encoding.GetEncoding("UTF-8"));
+            //%25cd%25e2%25c3%25b3
+            //webBrowser.Source = new Uri(new Strategy_job1001().GetUri("外贸"));
+            //webBrowser.Source = new Uri("https://www.baidu.com");
         }
 
 
