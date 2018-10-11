@@ -40,7 +40,16 @@ namespace BearClaw
                     AppComponent.ShowTip("重新打开程序","提示");
                 }
             };
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
             log.Info("==Startup=====================>>>");
+        }
+
+        void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("程序出错:" + Environment.NewLine + e.Exception.Message);
+            log.Error("程序出错:" + e.Exception.Message);
+            //Shutdown(1);
+            e.Handled = true;
         }
 
         void MainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
