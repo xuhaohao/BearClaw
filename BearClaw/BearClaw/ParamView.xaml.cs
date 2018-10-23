@@ -35,7 +35,7 @@ namespace BearClaw
                 //    var strContent = Methods.Serialize(CollectionData);
                 //    File.WriteAllText(StrPath, strContent);
                 //};
-                dgMain.ItemsSource = Db.ParamsCache;
+                dgMain.ItemsSource = DbMysql.ParamsCache;
             }
         }
 

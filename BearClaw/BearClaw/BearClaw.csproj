@@ -122,7 +122,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\Excels.cs" />
     <Compile Include="Common\MailTask.cs" />
-    <Compile Include="Common\MySqlHelper.cs" />
+    <Compile Include="Common\DbMysql.cs" />
     <Compile Include="Strategy\MyStrategy.cs" />
     <Compile Include="Strategy\Strategy_0760rc.cs" />
     <Compile Include="Strategy\Strategy_51job.cs" />
@@ -155,7 +155,6 @@
     <Compile Include="ParamView.xaml.cs">
       <DependentUpon>ParamView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\Db.cs" />
     <Compile Include="Common\Methods.cs" />
     <Compile Include="Common\NotifyIconComponent.cs">
       <SubType>Component</SubType>
@@ -218,7 +217,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="bearclaw.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

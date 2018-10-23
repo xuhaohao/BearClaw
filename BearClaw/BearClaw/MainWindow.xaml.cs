@@ -107,7 +107,7 @@ namespace BearClaw
                 MailTask.Release(sendResult => {
                     if (sendResult.Count > 0)
                     {
-                        Db.CreateUpdate(sendResult);
+                        DbMysql.CreateUpdate(sendResult);
                         Dispatcher.Invoke(() => {
                             foreach (var job in sendResult)
                             {
@@ -120,7 +120,7 @@ namespace BearClaw
                 mpbMain.Visibility = Visibility.Collapsed;
             };
 
-            _jobCollections = Db.GetJobs();
+            _jobCollections = DbMysql.GetJobs();
             dgMain.ItemsSource = _jobCollections;
             tblCount.Text = _jobCollections.Count.ToString();
 
@@ -176,12 +176,12 @@ namespace BearClaw
                 var myStrategy = MyStrategy.Dictionary[domain];
                 var list = myStrategy.Strategy(htmlText);
 
-                List<Jobs> createResult = Db.Valid(list);
-                log.DebugFormat("网址{0}的查询结果为{1}", myStrategy.GetDomain(), createResult.Count);
+                IEnumerable<Jobs> createResult = DbMysql.Valid(list);
+                log.DebugFormat("网址{0}的查询结果为{1}", myStrategy.GetDomain(), createResult.Count());
 
                 MailTask.Put(_queryCount - 1, createResult,sendResult => {
                     if (sendResult.Count > 0) {
-                        Db.CreateUpdate(sendResult);
+                        DbMysql.CreateUpdate(sendResult);
                         Dispatcher.Invoke(() => {
                             foreach (var job in sendResult)
                             {

@@ -21,8 +21,9 @@ namespace BearClaw.Common
 
         private static List<Jobs> _bag = new List<Jobs>();
 
-        public static void Put(int id ,List<Jobs> jobs, Action<List<Jobs>> sendResult) {
-            if (jobs != null && jobs.Count > 0) {
+        public static void Put(int id, IEnumerable<Jobs> jobs, Action<List<Jobs>> sendResult)
+        {
+            if (jobs != null && jobs.Count() > 0) {
                 _bag.AddRange(jobs);
             }
             log.DebugFormat("MailTask.Put(id={0})   _bag.Count = {1}", id, _bag.Count);
@@ -76,11 +77,11 @@ namespace BearClaw.Common
 
         private static void SendMail(string mailId,string subject , string content, Action<List<Jobs>> sendResult)
         {
-            var eMailServer = Db.GetFirstParam("email", "send_server").Value;
-            var userName = Db.GetFirstParam("email", "send_username").Value;
-            var pwd = Db.GetFirstParam("email", "send_password").Value;
+            var eMailServer = DbMysql.GetFirstParam("email", "send_server").Value;
+            var userName = DbMysql.GetFirstParam("email", "send_username").Value;
+            var pwd = DbMysql.GetFirstParam("email", "send_password").Value;
             //var subject = Db.GetFirstParam("email", "send_subject").Value;
-            var list = Db.GetParams("email", "receive_username");
+            var list = DbMysql.GetParams("email", "receive_username");
 
             var mailMessage = new MailMessage();
             foreach (var param_receive_username in list)

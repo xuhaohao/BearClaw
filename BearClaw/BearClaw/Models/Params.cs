@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace BearClaw.Common
 {
-    [Table]
+    //[Table]
     public class Params : INotifyPropertyChanged
     {
-        [PrimaryKey]
+        //[PrimaryKey]
         public long Id { get; set; }
 
         private string _fieldGroup;
-        [Field]
+        //[Field]
         public string FieldGroup {
             get { return _fieldGroup; }
             set
@@ -26,7 +26,7 @@ namespace BearClaw.Common
         }
 
         private string _name;
-        [Field]
+        //[Field]
         public string Name {
             get { return _name; }
             set
@@ -37,7 +37,7 @@ namespace BearClaw.Common
         }
 
         private string _value;
-        [Field]
+        //[Field]
         public string Value {
             get { return _value; }
             set
@@ -55,7 +55,7 @@ namespace BearClaw.Common
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-            Db.UpdateParamValue(this);
+            //DbMysql.UpdateParamValue(this);
         }
     }
 }
